@@ -4,9 +4,9 @@
 
 ## Project info
 
-**Project URL**: https://app.bilt.me/agent/{PROJECT_ID}
+**Project URL**: https://app.bilt.me/agent/2e6f64ac-095d-4d38-a7eb-b754468c2946
 
-**Project ID**: `{PROJECT_ID}`
+**Project ID**: `2e6f64ac-095d-4d38-a7eb-b754468c2946`
 
 ## How can I edit this app?
 
@@ -14,7 +14,7 @@ There are several ways of editing your application.
 
 **Use Bilt**
 
-Simply visit your [Bilt Project](https://app.bilt.me/agent/{PROJECT_ID}) and start sending messages. Describe what you want to change, add, or fix in natural language.
+Simply visit your [Bilt Project](https://app.bilt.me/agent/2e6f64ac-095d-4d38-a7eb-b754468c2946) and start sending messages. Describe what you want to change, add, or fix in natural language.
 
 Changes made via Bilt are instant - just send a message and your app updates.
 
@@ -73,7 +73,7 @@ All generated automatically by Bilt from your natural language instructions.
 
 **Option 1: Preview in Bilt (Recommended)**
 
-Open your [Bilt Project](https://app.bilt.me/agent/{PROJECT_ID}) and use the built-in preview.
+Open your [Bilt Project](https://app.bilt.me/agent/2e6f64ac-095d-4d38-a7eb-b754468c2946) and use the built-in preview.
 
 Open **Deploy & Share** to create a revocable preview link or build the app on your iPhone.
 
@@ -88,7 +88,7 @@ Then scan the QR code with Expo Go.
 
 ## How can I deploy this project?
 
-Open your [Bilt Project](https://app.bilt.me/agent/{PROJECT_ID}), select **Deploy & Share**, then choose **Publish to web**, **Release on App Store**, or **Release on Play Store**.
+Open your [Bilt Project](https://app.bilt.me/agent/2e6f64ac-095d-4d38-a7eb-b754468c2946), select **Deploy & Share**, then choose **Publish to web**, **Release on App Store**, or **Release on Play Store**.
 
 ### Deploy with Bilt
 
@@ -98,7 +98,7 @@ Publishing to web creates a public, installable web app at its own URL. Bilt als
 
 **Via Bilt (Easiest)**
 
-Visit your [Bilt Project](https://app.bilt.me/agent/{PROJECT_ID}) and send a message describing what you want:
+Visit your [Bilt Project](https://app.bilt.me/agent/2e6f64ac-095d-4d38-a7eb-b754468c2946) and send a message describing what you want:
 
 - "Add a dark mode toggle"
 - "Change the button color to blue"
