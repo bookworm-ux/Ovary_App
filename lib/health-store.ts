@@ -22,6 +22,10 @@ interface HealthState extends HealthData {
   addPeriod: (period: PeriodLog) => Promise<void>;
   addSymptomLog: (log: SymptomLog) => Promise<void>;
   addLabResult: (result: LabResult) => Promise<void>;
+  deletePeriod: (id: string) => Promise<void>;
+  deleteSymptomLog: (id: string) => Promise<void>;
+  deleteLabResult: (id: string) => Promise<void>;
+  clearMedications: () => Promise<void>;
   deleteAllData: () => Promise<void>;
 }
 
@@ -68,6 +72,48 @@ export const useHealthStore = create<HealthState>((set, get) => ({
   addLabResult: async (result) => {
     set((state) => ({ labs: [...state.labs, result] }));
     await saveHealthData(selectData(get()));
+  },
+  deletePeriod: async (id) => {
+    const previous = get().periods;
+    set((state) => ({ periods: state.periods.filter((item) => item.id !== id) }));
+    try {
+      await saveHealthData(selectData(get()));
+    } catch (error) {
+      set({ periods: previous });
+      throw error;
+    }
+  },
+  deleteSymptomLog: async (id) => {
+    const previous = get().symptomLogs;
+    set((state) => ({ symptomLogs: state.symptomLogs.filter((item) => item.id !== id) }));
+    try {
+      await saveHealthData(selectData(get()));
+    } catch (error) {
+      set({ symptomLogs: previous });
+      throw error;
+    }
+  },
+  deleteLabResult: async (id) => {
+    const previous = get().labs;
+    set((state) => ({ labs: state.labs.filter((item) => item.id !== id) }));
+    try {
+      await saveHealthData(selectData(get()));
+    } catch (error) {
+      set({ labs: previous });
+      throw error;
+    }
+  },
+  clearMedications: async () => {
+    const previous = get().profile;
+    if (!previous) return;
+
+    set({ profile: { ...previous, medications: undefined } });
+    try {
+      await saveHealthData(selectData(get()));
+    } catch (error) {
+      set({ profile: previous });
+      throw error;
+    }
   },
   deleteAllData: async () => {
     await deleteStoredHealthData();
