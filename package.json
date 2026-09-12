@@ -14,6 +14,7 @@
     "format:check": "oxfmt --check ."
   },
   "dependencies": {
+    "@biltme/backend": "^0.7.0",
     "@expo-google-fonts/inter": "~0.4.2",
     "@expo/config": "~57.0.9",
     "@gorhom/bottom-sheet": "^5.2.9",

@@ -154,6 +154,14 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <HeroUINativeProvider>
         <AppNavigator />
+        {showBrandLaunch ? (
+          <View
+            className="bg-background absolute inset-0 z-50 items-center justify-center"
+            accessibilityViewIsModal
+          >
+            <OvaryLogo size={68} />
+          </View>
+        ) : null}
         <InstallPrompt />
       </HeroUINativeProvider>
     </GestureHandlerRootView>

@@ -41,7 +41,20 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     extra: {
       appStoreAppId: process.env.BILT_APP_STORE_APP_ID,
     },
-    plugins: ['expo-router', 'expo-font', 'expo-secure-store', 'expo-sharing', ...nativePlugins],
+    plugins: [
+      'expo-router',
+      'expo-font',
+      'expo-secure-store',
+      'expo-sharing',
+      [
+        'expo-splash-screen',
+        {
+          backgroundColor: '#f7eff1',
+          dark: { backgroundColor: '#f7eff1' },
+        },
+      ],
+      ...nativePlugins,
+    ],
     experiments: {
       typedRoutes: true,
       reactCompiler: true,
