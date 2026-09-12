@@ -13,7 +13,7 @@ import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
 import * as DevClient from 'expo-dev-client';
-import { HeroUINativeProvider } from 'heroui-native';
+import { HeroUINativeProvider, useThemeColor } from 'heroui-native';
 import { Uniwind } from 'uniwind';
 import {
   ErrorBoundary as ExpoErrorBoundary,
@@ -22,6 +22,7 @@ import {
   Stack,
 } from 'expo-router';
 
+import { useHealthStore } from '@/lib/health-store';
 import { initPostHog } from '@/lib/posthog';
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
@@ -55,6 +56,12 @@ export default function RootLayout() {
     Inter_600SemiBold,
     Inter_700Bold,
   });
+  const hydrate = useHealthStore((state) => state.hydrate);
+  const isHydrated = useHealthStore((state) => state.isHydrated);
+
+  useEffect(() => {
+    void hydrate();
+  }, [hydrate]);
 
   // Report uncaught JS errors and unhandled promise rejections to parent (Bilt preview iframe)
   useEffect(() => {
@@ -129,23 +136,40 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (loaded || error) {
+    if ((loaded || error) && isHydrated) {
       void SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [loaded, error, isHydrated]);
 
-  if (!loaded && !error) {
+  if ((!loaded && !error) || !isHydrated) {
     return null;
   }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <HeroUINativeProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ title: 'Habits', headerShown: false }} />
-        </Stack>
+        <AppNavigator />
         <InstallPrompt />
       </HeroUINativeProvider>
     </GestureHandlerRootView>
+  );
+}
+
+function AppNavigator() {
+  const background = useThemeColor('background');
+  return (
+    <Stack
+      screenOptions={{
+        contentStyle: { backgroundColor: background },
+        headerShadowVisible: false,
+        headerBackButtonDisplayMode: 'minimal',
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+      <Stack.Screen name="log" options={{ title: 'Log period', presentation: 'modal' }} />
+      <Stack.Screen name="labs" options={{ title: 'Lab values', presentation: 'modal' }} />
+      <Stack.Screen name="prediction" options={{ title: 'Prediction details' }} />
+    </Stack>
   );
 }

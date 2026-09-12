@@ -1,11 +1,9 @@
-import { Home } from 'lucide-react-native';
+import { ChartNoAxesCombined, Home, Settings, SquarePen } from 'lucide-react-native';
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useThemeColor } from 'heroui-native';
-import { useUniwind } from 'uniwind';
 
 export default function TabLayout() {
-  const { theme } = useUniwind();
   const [background, foreground, border, accent, muted] = useThemeColor([
     'background',
     'foreground',
@@ -16,27 +14,45 @@ export default function TabLayout() {
 
   return (
     <>
-      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+      <StatusBar style="dark" />
       <Tabs
         screenOptions={{
-          headerStyle: { backgroundColor: background },
-          headerTintColor: foreground,
-          headerTitleStyle: { color: foreground },
-          headerShadowVisible: false,
+          headerShown: false,
           sceneStyle: { backgroundColor: background },
-          tabBarStyle: {
-            backgroundColor: background,
-            borderTopColor: border,
-          },
+          tabBarStyle: { backgroundColor: background, borderTopColor: border },
           tabBarActiveTintColor: accent,
           tabBarInactiveTintColor: muted,
+          tabBarLabelStyle: { fontFamily: 'Inter_500Medium', fontSize: 11 },
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Home',
-            tabBarIcon: ({ color, size }) => <Home color={color} size={size ?? 24} />,
+            title: 'Today',
+            tabBarIcon: ({ color, size }) => <Home color={color} size={size ?? 22} />,
+          }}
+        />
+        <Tabs.Screen
+          name="track"
+          options={{
+            title: 'Track',
+            tabBarIcon: ({ color, size }) => <SquarePen color={color} size={size ?? 22} />,
+          }}
+        />
+        <Tabs.Screen
+          name="report"
+          options={{
+            title: 'Report',
+            tabBarIcon: ({ color, size }) => (
+              <ChartNoAxesCombined color={color} size={size ?? 22} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
+            tabBarIcon: ({ color, size }) => <Settings color={color} size={size ?? 22} />,
           }}
         />
       </Tabs>

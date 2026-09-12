@@ -37,6 +37,36 @@
  * }
  */
 
+@layer theme {
+  :root {
+    @variant light {
+      --accent: oklch(0.55 0.16 355);
+      --accent-foreground: oklch(0.99 0.01 355);
+      --focus: var(--accent);
+      --background: oklch(0.985 0.008 70);
+      --background-secondary: oklch(0.96 0.014 70);
+      --foreground: oklch(0.25 0.025 35);
+      --muted: oklch(0.52 0.025 35);
+      --surface: oklch(1 0 0);
+      --border: oklch(0.89 0.02 55);
+      --success: oklch(0.56 0.12 155);
+    }
+
+    @variant dark {
+      --accent: oklch(0.55 0.16 355);
+      --accent-foreground: oklch(0.99 0.01 355);
+      --focus: var(--accent);
+      --background: oklch(0.985 0.008 70);
+      --background-secondary: oklch(0.96 0.014 70);
+      --foreground: oklch(0.25 0.025 35);
+      --muted: oklch(0.52 0.025 35);
+      --surface: oklch(1 0 0);
+      --border: oklch(0.89 0.02 55);
+      --success: oklch(0.56 0.12 155);
+    }
+  }
+}
+
 @source './node_modules/heroui-native/lib';
 
 /*
