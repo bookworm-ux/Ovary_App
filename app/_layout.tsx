@@ -10,8 +10,8 @@ import {
   useFonts,
 } from '@expo-google-fonts/inter';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
-import { Platform } from 'react-native';
-import { useEffect } from 'react';
+import { Platform, View } from 'react-native';
+import { useEffect, useState } from 'react';
 import * as DevClient from 'expo-dev-client';
 import { HeroUINativeProvider, useThemeColor } from 'heroui-native';
 import { Uniwind } from 'uniwind';
@@ -27,6 +27,7 @@ import { initPostHog } from '@/lib/posthog';
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
+import { OvaryLogo } from '@/components/OvaryLogo';
 
 /**
  * Custom ErrorBoundary that reports React render errors to the parent window (Bilt preview iframe)
@@ -58,6 +59,7 @@ export default function RootLayout() {
   });
   const hydrate = useHealthStore((state) => state.hydrate);
   const isHydrated = useHealthStore((state) => state.isHydrated);
+  const [showBrandLaunch, setShowBrandLaunch] = useState(true);
 
   useEffect(() => {
     void hydrate();
@@ -138,7 +140,10 @@ export default function RootLayout() {
   useEffect(() => {
     if ((loaded || error) && isHydrated) {
       void SplashScreen.hideAsync();
+      const timer = setTimeout(() => setShowBrandLaunch(false), 1100);
+      return () => clearTimeout(timer);
     }
+    return undefined;
   }, [loaded, error, isHydrated]);
 
   if ((!loaded && !error) || !isHydrated) {

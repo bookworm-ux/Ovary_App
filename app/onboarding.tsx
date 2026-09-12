@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { Button, Description, Input, Label, TextField, Typography } from 'heroui-native';
 import { useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 import { ChoiceButton } from '@/components/health-form';
 import { MedicalDisclaimer, PageIntro, PrivacyCard, SectionHeading } from '@/components/health-ui';
