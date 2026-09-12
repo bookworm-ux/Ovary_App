@@ -4,9 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useThemeColor } from 'heroui-native';
 
 export default function TabLayout() {
-  const [background, foreground, border, accent, muted] = useThemeColor([
+  const [background, border, accent, muted] = useThemeColor([
     'background',
-    'foreground',
     'border',
     'accent',
     'muted',

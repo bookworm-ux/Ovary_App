@@ -1,31 +1,19 @@
 {
-  "name": "Your App Name",
-  "short_name": "Your App",
-  "description": "An app built with Bilt",
+  "name": "CycleWise",
+  "short_name": "CycleWise",
+  "description": "Private, condition-aware cycle tracking and predictions",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#6366f1",
-  "background_color": "#ffffff",
+  "theme_color": "#514149",
+  "background_color": "#f9e7ee",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "src": "/icons/ovary-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

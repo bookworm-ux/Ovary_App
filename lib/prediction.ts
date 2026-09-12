@@ -47,12 +47,12 @@ function dateAtOffset(isoDate: string, days: number): string {
 
 export function getCycleLengths(periods: PeriodLog[]): number[] {
   const uniqueStarts = [...new Set(periods.map((period) => period.startDate))]
-    .map(parseISO)
+    .map((date) => parseISO(date))
     .sort((a, b) => a.getTime() - b.getTime());
 
-  return uniqueStarts.slice(1).map((date, index) =>
-    differenceInCalendarDays(date, uniqueStarts[index]),
-  );
+  return uniqueStarts
+    .slice(1)
+    .map((date, index) => differenceInCalendarDays(date, uniqueStarts[index]));
 }
 
 export function filterCycleLengths(lengths: number[]): {
@@ -73,8 +73,7 @@ function mean(values: number[]): number {
 function sampleStandardDeviation(values: number[]): number {
   const average = mean(values);
   const variance =
-    values.reduce((sum, value) => sum + (value - average) ** 2, 0) /
-    (values.length - 1);
+    values.reduce((sum, value) => sum + (value - average) ** 2, 0) / (values.length - 1);
   return Math.sqrt(variance);
 }
 
@@ -87,8 +86,7 @@ export function getCycleStats(periods: PeriodLog[]): CycleStats {
     filteredLengths: filtered.values,
     excludedCount: filtered.excludedCount,
     average,
-    spread:
-      filtered.values.length >= 2 ? sampleStandardDeviation(filtered.values) : null,
+    spread: filtered.values.length >= 2 ? sampleStandardDeviation(filtered.values) : null,
     min: filtered.values.length ? Math.min(...filtered.values) : null,
     max: filtered.values.length ? Math.max(...filtered.values) : null,
   };
@@ -123,8 +121,7 @@ function getPrior(condition: Condition, labs: LabResult[], cycleLengths: number[
     }
     if (cycleLengths.length > 0) {
       available += 1;
-      const longShare =
-        cycleLengths.filter((length) => length >= 55).length / cycleLengths.length;
+      const longShare = cycleLengths.filter((length) => length >= 55).length / cycleLengths.length;
       if (longShare >= 0.3) severe += 1;
     }
 
@@ -144,7 +141,8 @@ function getPrior(condition: Condition, labs: LabResult[], cycleLengths: number[
       mean: 33 + shift,
       spread: 6,
       label: 'Hypothyroidism starting pattern',
-      adjustment: shift > 0 ? `TSH added ${shift.toFixed(1)} days to the starting estimate` : undefined,
+      adjustment:
+        shift > 0 ? `TSH added ${shift.toFixed(1)} days to the starting estimate` : undefined,
     };
   }
 
@@ -164,7 +162,11 @@ function getPrior(condition: Condition, labs: LabResult[], cycleLengths: number[
   }
 
   if (condition === 'anemia') {
-    return { mean: 29.3, spread: 3.5, label: 'General starting pattern (anemia does not shift dates)' };
+    return {
+      mean: 29.3,
+      spread: 3.5,
+      label: 'General starting pattern (anemia does not shift dates)',
+    };
   }
   return { mean: 29.3, spread: 3.5, label: 'General starting pattern' };
 }
@@ -186,8 +188,7 @@ export function calculatePrediction(data: HealthData, today = new Date()): Predi
     const priorWeight = 1 / prior.spread ** 2;
     const dataWeight = n / personalSpread ** 2;
     estimateDays =
-      (dataWeight * personalAverage + priorWeight * prior.mean) /
-      (dataWeight + priorWeight);
+      (dataWeight * personalAverage + priorWeight * prior.mean) / (dataWeight + priorWeight);
     const uncertaintyInEstimate = 1 / (dataWeight + priorWeight);
     predictionSpread = Math.sqrt(uncertaintyInEstimate + personalSpread ** 2);
   }

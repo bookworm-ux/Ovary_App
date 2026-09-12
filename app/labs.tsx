@@ -18,11 +18,12 @@ export default function LabsScreen() {
 
   const handleSave = async () => {
     const parsed = Object.fromEntries(
-      keys
-        .filter((key) => values[key]?.trim())
-        .map((key) => [key, Number(values[key])]),
+      keys.filter((key) => values[key]?.trim()).map((key) => [key, Number(values[key])]),
     ) as Partial<Record<LabKey, number>>;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Object.values(parsed).some((value) => !Number.isFinite(value))) {
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+      Object.values(parsed).some((value) => !Number.isFinite(value))
+    ) {
       setError('Check the date and enter only numeric lab values.');
       return;
     }
@@ -40,19 +41,38 @@ export default function LabsScreen() {
   };
 
   return (
-    <KeyboardAvoidingView className="flex-1 bg-background" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerClassName="gap-6 px-5 py-6 pb-safe-offset-8">
+    <KeyboardAvoidingView
+      className="bg-background flex-1"
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerClassName="gap-6 px-5 py-6 pb-safe-offset-8"
+      >
         {keys.length === 0 ? (
           <View className="gap-4">
-            <SectionHeading title="No condition-specific labs" detail="Lab entry is optional and only appears for PCOS, thyroid conditions, or anemia." />
-            <Button variant="tertiary" onPress={() => router.back()}>Close</Button>
+            <SectionHeading
+              title="No condition-specific labs"
+              detail="Lab entry is optional and only appears for PCOS, thyroid conditions, or anemia."
+            />
+            <Button variant="tertiary" onPress={() => router.back()}>
+              Close
+            </Button>
           </View>
         ) : (
           <>
-            <SectionHeading title="Add lab results" detail="Enter only values from a dated lab report. Every field is optional." />
+            <SectionHeading
+              title="Add lab results"
+              detail="Enter only values from a dated lab report. Every field is optional."
+            />
             <TextField isRequired>
               <Label>Result date</Label>
-              <Input value={date} onChangeText={setDate} placeholder="YYYY-MM-DD" autoCapitalize="none" />
+              <Input
+                value={date}
+                onChangeText={setDate}
+                placeholder="YYYY-MM-DD"
+                autoCapitalize="none"
+              />
             </TextField>
             {keys.map((key) => {
               const lab = LAB_DEFINITIONS[key];
@@ -65,7 +85,10 @@ export default function LabsScreen() {
                     keyboardType="decimal-pad"
                     placeholder={`${lab.normalMin}–${lab.normalMax} ${lab.unit}`}
                   />
-                  <Description>Reference range shown: {lab.normalMin}–{lab.normalMax} {lab.unit}. Your laboratory may use a different range.</Description>
+                  <Description>
+                    Reference range shown: {lab.normalMin}–{lab.normalMax} {lab.unit}. Your
+                    laboratory may use a different range.
+                  </Description>
                 </TextField>
               );
             })}
@@ -74,7 +97,9 @@ export default function LabsScreen() {
                 Anemia labs can create report flags, but never change your predicted period date.
               </Typography.Paragraph>
             ) : null}
-            {error ? <Typography.Paragraph className="text-danger">{error}</Typography.Paragraph> : null}
+            {error ? (
+              <Typography.Paragraph className="text-danger">{error}</Typography.Paragraph>
+            ) : null}
             <MedicalDisclaimer compact />
             <Button size="lg" onPress={() => void handleSave()}>
               <Button.Label>Save lab result</Button.Label>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="CycleWise logo">
+  <rect width="512" height="512" rx="112" fill="#f9e7ee"/>
+  <path d="M349 163a141 141 0 1 1-181 11" fill="none" stroke="#514149" stroke-width="23" stroke-linecap="round"/>
+  <circle cx="166" cy="171" r="15" fill="#ad5877"/>
+  <circle cx="185" cy="137" r="12" fill="#ad5877"/>
+  <circle cx="209" cy="111" r="9" fill="#ad5877"/>
+  <circle cx="233" cy="94" r="7" fill="#ad5877"/>
+</svg>

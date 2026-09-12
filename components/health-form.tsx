@@ -29,8 +29,12 @@ export function RatingPicker({
         ))}
       </View>
       <View className="flex-row justify-between">
-        <Typography.Caption color="muted">Light</Typography.Caption>
-        <Typography.Caption color="muted">Strong</Typography.Caption>
+        <Typography.Paragraph type="body-sm" color="muted">
+          Light
+        </Typography.Paragraph>
+        <Typography.Paragraph type="body-sm" color="muted">
+          Strong
+        </Typography.Paragraph>
       </View>
     </View>
   );

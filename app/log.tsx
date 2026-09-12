@@ -6,15 +6,11 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 import { ChoiceButton, RatingPicker } from '@/components/health-form';
 import { MedicalDisclaimer, SectionHeading } from '@/components/health-ui';
-import {
-  SYMPTOMS,
-  SYMPTOM_LABELS,
-  type Severity,
-  type Symptom,
-} from '@/lib/health-types';
+import { SYMPTOMS, SYMPTOM_LABELS, type Severity, type Symptom } from '@/lib/health-types';
 import { useHealthStore } from '@/lib/health-store';
 
-const makeId = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+const makeId = (prefix: string) =>
+  `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
 export default function LogScreen() {
   const addPeriod = useHealthStore((state) => state.addPeriod);
@@ -63,34 +59,69 @@ export default function LogScreen() {
   };
 
   return (
-    <KeyboardAvoidingView className="flex-1 bg-background" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerClassName="gap-7 px-5 py-6 pb-safe-offset-8">
+    <KeyboardAvoidingView
+      className="bg-background flex-1"
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerClassName="gap-7 px-5 py-6 pb-safe-offset-8"
+      >
         <View className="gap-4">
-          <SectionHeading title="Period details" detail="Start date is required. Add an end date or length whenever you know it." />
+          <SectionHeading
+            title="Period details"
+            detail="Start date is required. Add an end date or length whenever you know it."
+          />
           <TextField isRequired isInvalid={Boolean(error)}>
             <Label>Start date</Label>
-            <Input value={startDate} onChangeText={setStartDate} placeholder="YYYY-MM-DD" autoCapitalize="none" />
-            {error ? <Typography.Caption className="text-danger">{error}</Typography.Caption> : null}
+            <Input
+              value={startDate}
+              onChangeText={setStartDate}
+              placeholder="YYYY-MM-DD"
+              autoCapitalize="none"
+            />
+            {error ? (
+              <Typography.Paragraph type="body-sm" className="text-danger">
+                {error}
+              </Typography.Paragraph>
+            ) : null}
           </TextField>
           <View className="flex-row gap-3">
             <TextField className="flex-1">
               <Label>End date</Label>
-              <Input value={endDate} onChangeText={setEndDate} placeholder="YYYY-MM-DD" autoCapitalize="none" />
+              <Input
+                value={endDate}
+                onChangeText={setEndDate}
+                placeholder="YYYY-MM-DD"
+                autoCapitalize="none"
+              />
             </TextField>
             <TextField className="flex-1">
               <Label>Length (days)</Label>
-              <Input value={periodLength} onChangeText={setPeriodLength} placeholder="Optional" keyboardType="number-pad" />
+              <Input
+                value={periodLength}
+                onChangeText={setPeriodLength}
+                placeholder="Optional"
+                keyboardType="number-pad"
+              />
             </TextField>
           </View>
           <RatingPicker value={flow} onChange={setFlow} label="Flow intensity" />
         </View>
 
         <View className="gap-3">
-          <SectionHeading title="Symptoms" detail="Optional. Select any symptom, then set how strong it felt." />
+          <SectionHeading
+            title="Symptoms"
+            detail="Optional. Select any symptom, then set how strong it felt."
+          />
           <View className="flex-row flex-wrap gap-2">
             {SYMPTOMS.map((symptom) => (
               <View key={symptom} className="w-[48%]">
-                <ChoiceButton label={SYMPTOM_LABELS[symptom]} selected={selected.has(symptom)} onPress={() => toggleSymptom(symptom)} />
+                <ChoiceButton
+                  label={SYMPTOM_LABELS[symptom]}
+                  selected={selected.has(symptom)}
+                  onPress={() => toggleSymptom(symptom)}
+                />
               </View>
             ))}
           </View>

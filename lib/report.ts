@@ -26,7 +26,7 @@ export function getSymptomCounts(data: HealthData): Record<Symptom, number> {
 export function getPatternFlags(data: HealthData): PatternFlag[] {
   const flags: PatternFlag[] = [];
   const stats = getCycleStats(data.periods);
-  if ((stats.spread ?? 0) > 7 || ((stats.max ?? 0) - (stats.min ?? 0) > 14)) {
+  if ((stats.spread ?? 0) > 7 || (stats.max ?? 0) - (stats.min ?? 0) > 14) {
     flags.push({
       title: 'Cycle length varies substantially',
       detail: 'Consider reviewing the timing and possible contributors with the patient.',

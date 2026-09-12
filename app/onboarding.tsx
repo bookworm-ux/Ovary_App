@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { Button, Description, Input, Label, TextField, Typography } from 'heroui-native';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 import { ChoiceButton } from '@/components/health-form';
 import { MedicalDisclaimer, PageIntro, PrivacyCard, SectionHeading } from '@/components/health-ui';
@@ -40,13 +40,21 @@ export default function OnboardingScreen() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-background"
+      className="bg-background flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerClassName="gap-7 px-5 pb-safe-offset-8 pt-safe-offset-6"
       >
+        <View className="items-center">
+          <Image
+            source={require('@/assets/Lutea-Logo-selection-10.png')}
+            resizeMode="contain"
+            style={{ width: 88, height: 88 }}
+            accessibilityLabel="CycleWise logo"
+          />
+        </View>
         <PageIntro
           eyebrow="Welcome"
           title="Predictions built around your pattern"
@@ -55,26 +63,51 @@ export default function OnboardingScreen() {
         <PrivacyCard />
 
         <View className="gap-4">
-          <SectionHeading title="About you" detail="Height and weight are optional and do not change cycle predictions." />
+          <SectionHeading
+            title="About you"
+            detail="Height and weight are optional and do not change cycle predictions."
+          />
           <TextField isRequired isInvalid={Boolean(error)}>
             <Label>Age</Label>
-            <Input value={age} onChangeText={setAge} keyboardType="number-pad" placeholder="e.g. 28" />
-            {error ? <Typography.Caption className="text-danger">{error}</Typography.Caption> : null}
+            <Input
+              value={age}
+              onChangeText={setAge}
+              keyboardType="number-pad"
+              placeholder="e.g. 28"
+            />
+            {error ? (
+              <Typography.Paragraph type="body-sm" className="text-danger">
+                {error}
+              </Typography.Paragraph>
+            ) : null}
           </TextField>
           <View className="flex-row gap-3">
             <TextField className="flex-1">
               <Label>Height (cm)</Label>
-              <Input value={height} onChangeText={setHeight} keyboardType="decimal-pad" placeholder="Optional" />
+              <Input
+                value={height}
+                onChangeText={setHeight}
+                keyboardType="decimal-pad"
+                placeholder="Optional"
+              />
             </TextField>
             <TextField className="flex-1">
               <Label>Weight (kg)</Label>
-              <Input value={weight} onChangeText={setWeight} keyboardType="decimal-pad" placeholder="Optional" />
+              <Input
+                value={weight}
+                onChangeText={setWeight}
+                keyboardType="decimal-pad"
+                placeholder="Optional"
+              />
             </TextField>
           </View>
         </View>
 
         <View className="gap-3">
-          <SectionHeading title="Diagnosed condition" detail="Choose only a condition diagnosed by a healthcare professional." />
+          <SectionHeading
+            title="Diagnosed condition"
+            detail="Choose only a condition diagnosed by a healthcare professional."
+          />
           {CONDITIONS.map((item) => (
             <ChoiceButton
               key={item.value}

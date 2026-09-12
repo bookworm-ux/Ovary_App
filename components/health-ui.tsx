@@ -14,7 +14,7 @@ export function PageIntro({ eyebrow, title, description, action }: PageIntroProp
   return (
     <View className="gap-2">
       {eyebrow ? (
-        <Typography className="text-accent text-xs font-semibold uppercase tracking-widest">
+        <Typography className="text-accent text-xs font-semibold tracking-widest uppercase">
           {eyebrow}
         </Typography>
       ) : null}
@@ -54,7 +54,7 @@ export function PrivacyCard() {
 export function MedicalDisclaimer({ compact = false }: { compact?: boolean }) {
   const muted = useThemeColor('muted');
   return (
-    <View className="flex-row gap-2 rounded-2xl bg-background-secondary p-4">
+    <View className="bg-background-secondary flex-row gap-2 rounded-2xl p-4">
       <Info color={muted} size={18} />
       <Typography.Paragraph color="muted" type="body-sm" className="min-w-0 flex-1">
         {compact

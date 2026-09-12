@@ -43,7 +43,10 @@ export const useHealthStore = create<HealthState>((set, get) => ({
       const data = await loadHealthData();
       set({ ...data, isHydrated: true, storageError: null });
     } catch {
-      set({ isHydrated: true, storageError: 'Your private data could not be opened on this device.' });
+      set({
+        isHydrated: true,
+        storageError: 'Your private data could not be opened on this device.',
+      });
     }
   },
   saveProfile: async (profile) => {

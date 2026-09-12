@@ -1,9 +1,4 @@
-export type Condition =
-  | 'none'
-  | 'pcos'
-  | 'hypothyroid'
-  | 'hyperthyroid'
-  | 'anemia';
+export type Condition = 'none' | 'pcos' | 'hypothyroid' | 'hyperthyroid' | 'anemia';
 
 export type Severity = 1 | 2 | 3 | 4 | 5;
 
@@ -118,7 +113,13 @@ export const LAB_DEFINITIONS: Record<LabKey, LabDefinition> = {
   lh: { key: 'lh', label: 'LH', unit: 'IU/L', normalMin: 1.9, normalMax: 12.5 },
   fsh: { key: 'fsh', label: 'FSH', unit: 'IU/L', normalMin: 2.5, normalMax: 10.2 },
   amh: { key: 'amh', label: 'AMH', unit: 'ng/mL', normalMin: 1, normalMax: 4 },
-  hemoglobin: { key: 'hemoglobin', label: 'Hemoglobin', unit: 'g/dL', normalMin: 12, normalMax: 16 },
+  hemoglobin: {
+    key: 'hemoglobin',
+    label: 'Hemoglobin',
+    unit: 'g/dL',
+    normalMin: 12,
+    normalMax: 16,
+  },
   ferritin: { key: 'ferritin', label: 'Ferritin', unit: 'ng/mL', normalMin: 15, normalMax: 150 },
 };
 

@@ -20,7 +20,8 @@ export default function HomeScreen() {
 
   const data = { profile, periods, labs, symptomLogs };
   const prediction = calculatePrediction(data);
-  const latestStart = [...periods].sort((a, b) => b.startDate.localeCompare(a.startDate))[0]?.startDate;
+  const latestStart = [...periods].sort((a, b) => b.startDate.localeCompare(a.startDate))[0]
+    ?.startDate;
   const cycleDay = latestStart
     ? Math.max(1, differenceInCalendarDays(new Date(), parseISO(latestStart)) + 1)
     : null;
@@ -39,7 +40,10 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-background" contentContainerClassName="gap-6 px-5 pb-safe-offset-28 pt-safe-offset-5">
+    <ScrollView
+      className="bg-background flex-1"
+      contentContainerClassName="gap-6 px-5 pb-safe-offset-28 pt-safe-offset-5"
+    >
       <PageIntro
         eyebrow={cycleDay ? `Cycle day ${cycleDay}` : 'Your first estimate'}
         title="Your cycle, without the 28-day assumption"
@@ -50,15 +54,19 @@ export default function HomeScreen() {
         }
       />
 
-      <Card className="overflow-hidden bg-accent-soft">
+      <Card className="bg-accent-soft overflow-hidden">
         <Card.Body className="gap-5 p-5">
           <View className="flex-row items-center gap-2">
             <CalendarDays color={accent} size={20} />
-            <Typography.Label className="text-accent">Predicted next period range</Typography.Label>
+            <Typography.Paragraph type="body-sm" className="text-accent">
+              Predicted next period range
+            </Typography.Paragraph>
           </View>
           <View className="gap-1">
             <Typography.Heading type="h2" className="text-3xl">
-              {prediction ? formatDateRange(prediction.rangeStart, prediction.rangeEnd) : 'Unavailable'}
+              {prediction
+                ? formatDateRange(prediction.rangeStart, prediction.rangeEnd)
+                : 'Unavailable'}
             </Typography.Heading>
             <Typography.Paragraph color="muted">
               {prediction?.anchorIsEstimated
@@ -82,7 +90,10 @@ export default function HomeScreen() {
       </Button>
 
       <View className="gap-3">
-        <SectionHeading title="Optional inputs" detail="Your predictions work without labs. Add them only if you want to." />
+        <SectionHeading
+          title="Optional inputs"
+          detail="Your predictions work without labs. Add them only if you want to."
+        />
         <Card>
           <Card.Body className="flex-row items-center gap-3">
             <FlaskConical color={accent} size={20} />
@@ -90,7 +101,13 @@ export default function HomeScreen() {
               <Card.Title>Condition-specific labs</Card.Title>
               <Card.Description>Only the most recent dated value is used.</Card.Description>
             </View>
-            <Button isIconOnly size="sm" variant="ghost" onPress={() => router.push('/labs')} accessibilityLabel="Add lab values">
+            <Button
+              isIconOnly
+              size="sm"
+              variant="ghost"
+              onPress={() => router.push('/labs')}
+              accessibilityLabel="Add lab values"
+            >
               <ChevronRight color={accent} size={18} />
             </Button>
           </Card.Body>
