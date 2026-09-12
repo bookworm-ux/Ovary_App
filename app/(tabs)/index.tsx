@@ -5,7 +5,6 @@ import { CalendarDays, ChevronRight, FlaskConical, Plus } from 'lucide-react-nat
 import { ScrollView, View } from 'react-native';
 
 import { MedicalDisclaimer, PageIntro, PrivacyCard, SectionHeading } from '@/components/health-ui';
-import { OvaryLogo } from '@/components/OvaryLogo';
 import { useHealthStore } from '@/lib/health-store';
 import { calculatePrediction, formatDateRange } from '@/lib/prediction';
 
@@ -45,10 +44,6 @@ export default function HomeScreen() {
       className="bg-background flex-1"
       contentContainerClassName="gap-6 px-5 pb-safe-offset-28 pt-safe-offset-5"
     >
-      <View className="items-center pb-1">
-        <OvaryLogo compact size={44} />
-      </View>
-
       <PageIntro
         eyebrow={cycleDay ? `Cycle day ${cycleDay}` : 'Your first estimate'}
         title="Your cycle, without the 28-day assumption"
