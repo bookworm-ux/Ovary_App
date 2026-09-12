@@ -49,8 +49,14 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       [
         'expo-splash-screen',
         {
-          backgroundColor: '#f7eff1',
-          dark: { backgroundColor: '#f7eff1' },
+          backgroundColor: '#ffffff',
+          image: './assets/Lutea-Logo-selection-10.png',
+          imageWidth: 112,
+          resizeMode: 'contain',
+          dark: {
+            backgroundColor: '#ffffff',
+            image: './assets/Lutea-Logo-selection-10.png',
+          },
         },
       ],
       ...nativePlugins,

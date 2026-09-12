@@ -10,8 +10,8 @@ import {
   useFonts,
 } from '@expo-google-fonts/inter';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
-import { Platform, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { Animated, Image, Platform, StyleSheet } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
 import * as DevClient from 'expo-dev-client';
 import { HeroUINativeProvider, useThemeColor } from 'heroui-native';
 import { Uniwind } from 'uniwind';
@@ -27,7 +27,6 @@ import { initPostHog } from '@/lib/posthog';
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
-import { OvaryLogo } from '@/components/OvaryLogo';
 
 /**
  * Custom ErrorBoundary that reports React render errors to the parent window (Bilt preview iframe)
@@ -137,15 +136,6 @@ export default function RootLayout() {
     registerServiceWorker();
   }, []);
 
-  useEffect(() => {
-    if ((loaded || error) && isHydrated) {
-      void SplashScreen.hideAsync();
-      const timer = setTimeout(() => setShowBrandLaunch(false), 1100);
-      return () => clearTimeout(timer);
-    }
-    return undefined;
-  }, [loaded, error, isHydrated]);
-
   if ((!loaded && !error) || !isHydrated) {
     return null;
   }
@@ -154,17 +144,60 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <HeroUINativeProvider>
         <AppNavigator />
-        {showBrandLaunch ? (
-          <View
-            className="bg-background absolute inset-0 z-50 items-center justify-center"
-            accessibilityViewIsModal
-          >
-            <OvaryLogo size={68} />
-          </View>
-        ) : null}
+        {showBrandLaunch ? <BrandLaunchCover onFinished={() => setShowBrandLaunch(false)} /> : null}
         <InstallPrompt />
       </HeroUINativeProvider>
     </GestureHandlerRootView>
+  );
+}
+
+function BrandLaunchCover({ onFinished }: { onFinished: () => void }) {
+  const background = useThemeColor('background');
+  const [opacity] = useState(() => new Animated.Value(1));
+  const transitionStarted = useRef(false);
+
+  const handleLayout = () => {
+    if (transitionStarted.current) return;
+    transitionStarted.current = true;
+
+    void (async () => {
+      try {
+        await SplashScreen.hideAsync();
+      } finally {
+        requestAnimationFrame(() => {
+          Animated.timing(opacity, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+          }).start(({ finished }) => {
+            if (finished) onFinished();
+          });
+        });
+      }
+    })();
+  };
+
+  return (
+    <Animated.View
+      onLayout={handleLayout}
+      accessibilityViewIsModal
+      style={{
+        ...StyleSheet.absoluteFill,
+        zIndex: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: background,
+        opacity,
+      }}
+    >
+      <Image
+        source={require('@/assets/Lutea-Logo-selection-10.png')}
+        accessibilityRole="image"
+        accessibilityLabel="Ovary logo"
+        resizeMode="contain"
+        style={{ width: 112, height: 112 }}
+      />
+    </Animated.View>
   );
 }
 
